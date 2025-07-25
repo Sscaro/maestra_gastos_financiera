@@ -1,0 +1,25 @@
+# Archivos temporales y de sistema
+__pycache__/
+*.pyc
+*.log
+*.tmp
+
+# Archivos de entorno
+.env
+*.sqlite3
+
+# Archivos de datos
+*.csv
+*.xlsx
+*.xls
+*.xlsm
+
+# Scripts o ejecutables de sistema
+*.bat
+*.exe
+*.sh
+
+# Entornos virtuales (por si usas uno)
+venv/
+.env/
+.env.bak/

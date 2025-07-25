@@ -1,0 +1,402 @@
+reemplazos:
+  - columnas_condicion:  # cambio realizado por tal 
+    - columna: "Nro Sub"
+      valor: "751"
+    columna_reemplazo: "Nro Cpto"
+    valor_reemplazo: "16"
+
+  - columnas_condicion: 
+    - columna: "Nro Sub"
+      valor: "751"
+    columna_reemplazo: "POOL"
+    valor_reemplazo: "040"
+
+  - columnas_condicion: 
+    - columna: "Nro Sub"
+      valor: "413"
+    columna_reemplazo: "Nro Cpto"
+    valor_reemplazo: "25"
+ 
+  - columnas_condicion: 
+    - columna: "Nro Sub"
+      valor: "431"
+    columna_reemplazo: "POOL"
+    valor_reemplazo: "030"
+
+  - columnas_condicion: 
+    - columna: "Nro Cpto"
+      valor: "25"
+    columna_reemplazo: "POOL"
+    valor_reemplazo: "040"
+
+  - columnas_condicion: 
+    - columna: "Nro Cpto"
+      valor: "22"
+    columna_reemplazo: "POOL"
+    valor_reemplazo: "130"
+
+  - columnas_condicion:
+    - columna: "Nro Ceco"
+      valor: "43448400"
+    columna_reemplazo: "Clasificación Regionales"
+    valor_reemplazo: "Sn"
+
+  - columnas_condicion: 
+    - columna: "Nro Ceco"
+      valor: "43448400"
+    columna_reemplazo: "Detalle Clasif Regionales"
+    valor_reemplazo: "Sn"
+
+  - columnas_condicion: 
+    - columna: "Nro Cpto"
+      valor: "44"
+    - columna: "Nro Sub"
+      valor: "502"
+    columna_reemplazo: "Detalle Clasif Regionales"
+    valor_reemplazo: "Arrendamientos sedes"
+
+  - columnas_condicion: 
+      - columna: "Nro Cpto"
+        valor: "41"
+      - columna: "Nro Sub"
+        valor: "503"
+    columna_reemplazo: "Detalle Clasif Regionales"
+    valor_reemplazo: "Niif"
+    
+  - columnas_condicion: 
+      - columna: "Nro Cpto"
+        valor: "41"
+      - columna: "Nro Sub"
+        valor: "506"
+    columna_reemplazo: "Detalle Clasif Regionales"
+    valor_reemplazo: "Niif"
+    
+  - columnas_condicion: 
+    - columna: "Cód Cliente"
+      valor: "10099647"
+    columna_reemplazo: "Of Ventas"
+    valor_reemplazo: "16"
+    
+  - columnas_condicion: 
+    - columna: "Cód Cliente"
+      valor: "10216228"
+    columna_reemplazo: "Of Ventas"
+    valor_reemplazo: "16"
+    
+  - columnas_condicion: 
+    - columna: "Cód Cliente"
+      valor: "10578252"
+    columna_reemplazo: "Of Ventas"
+    valor_reemplazo: "13"
+    
+  - columnas_condicion: 
+    - columna: "Cód Cliente"
+      valor: "10720991"
+    columna_reemplazo: "Of Ventas"
+    valor_reemplazo: "13"
+    
+  - columnas_condicion: 
+    - columna: "Cód Cliente"
+      valor: "10692451"
+    columna_reemplazo: "Of Ventas"
+    valor_reemplazo: "25"
+    
+  - columnas_condicion: 
+    - columna: "Cód Cliente"
+      valor: "10720800"
+    columna_reemplazo: "Of Ventas"
+    valor_reemplazo: "25"
+    
+  - columnas_condicion: 
+    - columna: "Cód Cliente"
+      valor: "10693491"
+    columna_reemplazo: "Of Ventas"
+    valor_reemplazo: "12"
+    
+  - columnas_condicion: 
+    - columna: "Cód Cliente"
+      valor: "10791277"
+    columna_reemplazo: "Of Ventas"
+    valor_reemplazo: "20"
+    
+  - columnas_condicion: 
+      - columna: "Nro Ceco"
+        valor: "43472200"
+      - columna: "Nro Sub"
+        valor: "337"
+    columna_reemplazo: "Clasificación Regionales"
+    valor_reemplazo: "Transversales"
+    
+  - columnas_condicion: 
+      - columna: "Nro Ceco"
+        valor: "43472200"
+      - columna: "Nro Sub"
+        valor: "337"
+    columna_reemplazo: "Detalle Clasif Regionales"
+    valor_reemplazo: "Impuestos"
+    
+  - columnas_condicion: 
+    - columna: "Nro Ceco"
+      valor: "751"
+    columna_reemplazo: "Nro Cpto"
+    valor_reemplazo: "16"
+
+  - columnas_condicion: 
+    - columna: "Nro Ceco"
+      valor: "43410400"
+    - columna: "Nro Cpto"
+      valor: "16"
+    - columna: "Nro Sub"
+      valor: "958"
+    columna_reemplazo: "Clasificación Regionales"
+    valor_reemplazo: "Controlable"
+
+  - columnas_condicion: 
+    - columna: "Nro Ceco"
+      valor: "43410400"
+    - columna: "Nro Cpto"
+      valor: "16"
+    - columna: "Nro Sub"
+      valor: "958"
+    columna_reemplazo: "Detalle Clasif Regionales"
+    valor_reemplazo: "Controlable"
+
+  - columnas_condicion: 
+    - columna: "Nro Ceco"
+      valor: "43300000"
+    - columna: "Nro Cpto"
+      valor: "46"
+    - columna: "Nro Sub"
+      valor: "504"
+    columna_reemplazo: "Detalle Clasif Regionales"
+    valor_reemplazo: "Controlable"
+
+  - columnas_condicion: 
+    - columna: "Nro Ceco"
+      valor: "43300000"
+    - columna: "Nro Cpto"
+      valor: "46"
+    - columna: "Nro Sub"
+      valor: "504"
+    columna_reemplazo: "Clasificación Regionales"
+    valor_reemplazo: "Controlable"
+  
+  - columnas_condicion: 
+    - columna: "Nro Ceco"
+      valor: "43442400"
+    - columna: "Nro Cpto"
+      valor: "16"
+    - columna: "Nro Sub"
+      valor: "460"
+    columna_reemplazo: "Clasificación Regionales"
+    valor_reemplazo: "Controlable"
+  
+  - columnas_condicion: 
+    - columna: "Nro Ceco"
+      valor: "43442400"
+    - columna: "Nro Cpto"
+      valor: "16"
+    - columna: "Nro Sub"
+      valor: "460"
+    columna_reemplazo: "Detalle Clasif Regionales"
+    valor_reemplazo: "Controlable"
+
+  - columnas_condicion: 
+    - columna: "Nro Ceco"
+      valor: "43410000"
+    - columna: "Nro Cpto"
+      valor: "16"
+    - columna: "Nro Sub"
+      valor: "958"
+    columna_reemplazo: "Clasificación Regionales"
+    valor_reemplazo: "Controlable"
+
+  - columnas_condicion: 
+    - columna: "Nro Ceco"
+      valor: "43410000"
+    - columna: "Nro Cpto"
+      valor: "16"
+    - columna: "Nro Sub"
+      valor: "958"
+    columna_reemplazo: "Detalle Clasif Regionales"
+    valor_reemplazo: "Controlable"
+  
+  - columnas_condicion: 
+    - columna: "Nro Ceco"
+      valor: "43400200"
+    - columna: "Nro Cpto"
+      valor: "16"
+    - columna: "Nro Sub"
+      valor: "958"
+    columna_reemplazo: "Detalle Clasif Regionales"
+    valor_reemplazo: "Controlable"
+
+  - columnas_condicion: 
+    - columna: "Nro Ceco"
+      valor: "43400200"
+    - columna: "Nro Cpto"
+      valor: "16"
+    - columna: "Nro Sub"
+      valor: "958"
+    columna_reemplazo: "Clasificación Regionales"
+    valor_reemplazo: "Controlable"
+
+  - columnas_condicion:
+    - columna: "Nro Ceco"
+      valor: "43472500"
+    - columna: "Nro Cpto"
+      valor: "16"
+    - columna: "Nro Sub"
+      valor: "460"
+    columna_reemplazo: "Detalle Clasif Regionales"
+    valor_reemplazo: "Controlable"
+
+  - columnas_condicion: 
+    - columna: "Nro Ceco"
+      valor: "43472500"
+    - columna: "Nro Cpto"
+      valor: "16"
+    - columna: "Nro Sub"
+      valor: "460"
+    columna_reemplazo: "Clasificación Regionales"
+    valor_reemplazo: "Controlable"
+
+  - columnas_condicion: 
+    - columna: "Nro Ceco"
+      valor: "43300600"
+    - columna: "Nro Cpto"
+      valor: "25"
+    - columna: "Nro Sub"
+      valor: "763"
+    columna_reemplazo: "Detalle Clasif Regionales"
+    valor_reemplazo: "Controlable"
+
+  - columnas_condicion: 
+    - columna: "Nro Ceco"
+      valor: "43300600"
+    - columna: "Nro Cpto"
+      valor: "25"
+    - columna: "Nro Sub"
+      valor: "763"
+    columna_reemplazo: "Clasificación Regionales"
+    valor_reemplazo: "Controlable"
+
+  - columnas_condicion: 
+    - columna: "Nro Ceco"
+      valor: "11302200"
+    - columna: "Nro Cpto"
+      valor: "18"
+    - columna: "Nro Sub"
+      valor: "772"
+    columna_reemplazo: "Clasificación Regionales"
+    valor_reemplazo: "Controlable"
+
+  - columnas_condicion: 
+    - columna: "Nro Ceco"
+      valor: "23302200"
+    - columna: "Nro Cpto"
+      valor: "18"
+    - columna: "Nro Sub"
+      valor: "772"
+    columna_reemplazo: "Clasificación Regionales"
+    valor_reemplazo: "Controlable"
+
+  - columnas_condicion: 
+    - columna: "Nro Ceco"
+      valor: "30302200"
+    - columna: "Nro Cpto"
+      valor: "18"
+    - columna: "Nro Sub"
+      valor: "772"
+    columna_reemplazo: "Clasificación Regionales"
+    valor_reemplazo: "Controlable"
+  
+  - columnas_condicion: 
+    - columna: "Nro Ceco"
+      valor: "41302200"
+    - columna: "Nro Cpto"
+      valor: "18"
+    - columna: "Nro Sub"
+      valor: "772"
+    columna_reemplazo: "Clasificación Regionales"
+    valor_reemplazo: "Controlable"
+
+  - columnas_condicion: 
+    - columna: "Nro Ceco"
+      valor: "43302200"
+    - columna: "Nro Cpto"
+      valor: "18"
+    - columna: "Nro Sub"
+      valor: "772"
+    columna_reemplazo: "Clasificación Regionales"
+    valor_reemplazo: "Controlable"
+  
+  - columnas_condicion: 
+    - columna: "Nro Ceco"
+      valor: "47302200"
+    - columna: "Nro Cpto"
+      valor: "18"
+    - columna: "Nro Sub"
+      valor: "772"
+    columna_reemplazo: "Clasificación Regionales"
+    valor_reemplazo: "Controlable"
+
+  - columnas_condicion: 
+    - columna: "Nro Ceco"
+      valor: "11302200"
+    - columna: "Nro Cpto"
+      valor: "18"
+    - columna: "Nro Sub"
+      valor: "772"
+    columna_reemplazo: "Detalle Clasif Regionales"
+    valor_reemplazo: "Controlable"
+
+  - columnas_condicion: 
+    - columna: "Nro Ceco"
+      valor: "23302200"
+    - columna: "Nro Cpto"
+      valor: "18"
+    - columna: "Nro Sub"
+      valor: "772"
+    columna_reemplazo: "Detalle Clasif Regionales"
+    valor_reemplazo: "Controlable"
+
+  - columnas_condicion: 
+    - columna: "Nro Ceco"
+      valor: "30302200"
+    - columna: "Nro Cpto"
+      valor: "18"
+    - columna: "Nro Sub"
+      valor: "772"
+    columna_reemplazo: "Detalle Clasif Regionales"
+    valor_reemplazo: "Controlable"
+  
+  - columnas_condicion: 
+    - columna: "Nro Ceco"
+      valor: "41302200"
+    - columna: "Nro Cpto"
+      valor: "18"
+    - columna: "Nro Sub"
+      valor: "772"
+    columna_reemplazo: "Detalle Clasif Regionales"
+    valor_reemplazo: "Controlable"
+
+  - columnas_condicion: 
+    - columna: "Nro Ceco"
+      valor: "43302200"
+    - columna: "Nro Cpto"
+      valor: "18"
+    - columna: "Nro Sub"
+      valor: "772"
+    columna_reemplazo: "Detalle Clasif Regionales"
+    valor_reemplazo: "Controlable"
+  
+  - columnas_condicion: 
+    - columna: "Nro Ceco"
+      valor: "47302200"
+    - columna: "Nro Cpto"
+      valor: "18"
+    - columna: "Nro Sub"
+      valor: "772"
+    columna_reemplazo: "Detalle Clasif Regionales"
+    valor_reemplazo: "Controlable"
