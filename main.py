@@ -1,122 +1,111 @@
-import os
-import sys
 
-from loguru import logger
-from helpers.utils import Procesar_configuracion
+from pathlib import Path
 import datetime as datetime
 import tkinter as tk
 import datetime as datetime
 from tkinter import filedialog
-import Modulos.validacion as vl
-import Modulos.ajustesbases as aj
-import Modulos.correcciones_real_ppto as ppto
-from Modulos.assert_ppto import validacion_calidad
-from Modulos.generar_drivers import generar_driver
+from Modulos import funcion_inconsistecias
+from Modulos import  ajuste_agrupaciones
+from Modulos import  funcion_validacion_agrupa_distribucion, funcion_anexar_real_ppto
+from config_path_routs import setup_logger
+from loguru import logger
+from config_path_routs import ConfigPathRoutes as cpr
+from helpers import cargar_archivo_yml
+from Modulos import ajustes_archivos_gasto
+from Modulos import generar_driver
 
 root = tk.Tk()
 root.withdraw()
-config = Procesar_configuracion('Insumos/configcecos.yml')
-reemplazos = Procesar_configuracion('Insumos/reemplazos.yml')
+path_config = cpr.resolver_rutas("Insumos", "config.yml")
+config = cargar_archivo_yml(path_config)
 
-def run():
+path_config_cecos = cpr.resolver_rutas(config['ruta_config_cecos'])
+path_config_reemplazos = cpr.resolver_rutas(config['ruta_config_reemplazos'])
+path_real_ppto = cpr.resolver_rutas(config['ruta_real_ppto'])
 
-    listameses = config['listameses']
-    logger.info("Comienza proceso \n sigue paso a paso las intrucciones...")
+def seleccionar_tarea(valor):
 
-    mes1 = str(datetime.datetime.now().month)
-    dia = str(datetime.datetime.now().day)
-    hora = str(datetime.datetime.now().hour)
-    Fecha = '{}_de_{}_hora_{}'.format(dia,mes1,hora)
-
-    mes = input("Ingresa el nombre del mes que estas calculando\n")
-
-    if mes.capitalize() not in listameses:
-        print("Error, No ingresaste un nombre mes valido, ejecuta nuevamente")
-        sys.exit()
-    archivoagrupadistrimes = filedialog.askopenfilename(title="ingresa el del archivo de agrupación mes",
+    rutaArchivoagrupa = filedialog.askopenfilename(title="ingresa el del archivo de agrupación mes",
                                        filetypes=[("Archivos Excel", "*.xlsx;*.xls")])
     
-    archivodistribcionmes = filedialog.askopenfilename(title="Ingresa el nombre del archivo distibución mes",
+    rutaArchivodisitribucion = filedialog.askopenfilename(title="ingresa el del archivo de distirbucion mes",
                                        filetypes=[("Archivos Excel", "*.xlsx;*.xls")])
+    
+    listameses = config['listameses']
+    mes = input("Ingresa el nombre del mes que estas calculando\n").capitalize()
+    if mes not in listameses:
+        raise ValueError('El mes ingresado no es valido')
+    
+    objeto_agrupaciones = ajustes_archivos_gasto(config, mes)
+    
+    dict_arch_param_agrupaciones= config['parametros_lectura_archivos']['libro_agrupaciones']
+       
+    if valor == 1:
+        # validacion de archivo real_ppto (valida que no hayan valores repetidos)
+        funcion_inconsistecias(objeto_agrupaciones, 
+                                config,
+                                path_real_ppto)
+            
+    elif valor == 2:
+        # compara tanto el libro de agrupaciones como el libro de distribucion
+        file = funcion_validacion_agrupa_distribucion(objeto_agrupaciones,
+                                               config,
+                                                rutaArchivoagrupa,
+                                                rutaArchivodisitribucion,
+                                                dict_arch_param_agrupaciones, 
+                                                mes )
+        file.to_excel(r'Salidas\Validaciones.xlsx',index=False)
+                    
+    elif valor == 3:
+        df_agrupaciones_ajustado = ajuste_agrupaciones(objeto_agrupaciones,
+                                                       config,
+                                                       path_real_ppto,
+                                                       rutaArchivoagrupa,
+                                                       dict_arch_param_agrupaciones,
+                                                       path_config_reemplazos, 
+                                                       mes)      
+        df_agrupaciones_ajustado.to_excel(r'Salidas\Agrupaciones.xlsx',index=False)
 
-    logger.info("Comencemos... \n por favor espera...")
-    rutaArchivoagrupa = os.path.join(os.getcwd(),'Insumos',archivoagrupadistrimes)
-    rutaArchivomes = os.path.join(os.getcwd(),'Insumos',archivodistribcionmes)
-    ruta_realppto = os.path.join(os.getcwd(),'Insumos','Real_Ppto.xlsx')
+    elif valor == 4:
+        # anexa información el archivo real ppto
+        logger.info("Se inicia cargando archivo de agrupaciones con ajustes hechos por usuario ℹ️")
+        path_real_agrupaciones = cpr.resolver_rutas(config['ruta_config_agrupaciones'])
+        if not Path(path_real_agrupaciones).exists(): # evalua si archivo agrupaciones existe           
+            raise FileNotFoundError(f"El archivo no existe: {path_real_agrupaciones.resolve()}")
+        real_ppto = funcion_anexar_real_ppto(objeto_agrupaciones,
+                                            config, 
+                                            path_real_agrupaciones,
+                                            path_real_ppto,
+                                            mes)
+        
+        real_ppto.to_excel(r'Salidas\real_ppto_{}.xlsx'.format(mes),index=False)
+        real_ppto.to_excel(r'Insumos\real_ppto.xlsx',index=False)
+        logger.info("Finaliza exitosamente creación de real ppto mes {} ℹ️ el archivo esta en lla carpeta Salidas ".format(mes))
 
-    #respuesta = aj.moverarchivo(realppto)
 
-    respuesta = False
-    if respuesta:
-        logger.info("Archivo de ppto guardado exitosamente en historico")
+    elif valor == 5:
+        driver =  generar_driver(path_real_ppto, config)
+        driver.generar_driver()
+        logger.info("Se genero driver.")
+        return False
     else:
-        logger.info("Archivo de ppto NO quedo en historico")
+        raise ValueError("Opción no válida. Por favor, selecciona una opción del 1 al 5.")
+    
+    logger.info("Proceso terminado ✅.. \n ¿Deseas continuar con alguna otra acción?")
+    
+def run():
+    
+    logger.info("Comienza proceso \n sigue paso a paso las intrucciones...")
 
-   
-    acciones = ["0. Evaluar archivo Real Ppto" ,"1. Validación Afos", '2. Ajustes Base Agrupaciones','3. Generación Agrupaciones','4. Generar drivers']
-    bol = True
-    tablavedad = {'SI':True, 'NO':False, 'S':True, 'N':False}
-    # DICCIONARIO PARA CAMBIAR ALGUNOS CECOS QUE SALEN COMO 99
-    cambioCeco_tipo_gasto = config['Configurar_cecos_tipo_gastos']
-    cambioCeco_tipo_centro= config['Configurar_cecos_tipo_centro']
-    realppto  = ppto.ajustes_real_ppto(ruta_realppto,config['lista_columas_tipado'])
+    ## logica para seleccionar tarea
+    acciones = config['seleccion_tarea']
+    
 
-    logger.info("Se ha realizado copia de Real_ppto en la carpeta historico.")
-    while bol == True:
-        valor = int(input("ingresa el valor de 0 a 4 de las siguientes aciones: \n {} \n {} \n {} \n {} \n {} \n".format(acciones[0],acciones[1],acciones[2],acciones[3],acciones[4])))
-        if valor == 0:
-            logger.info("Este paso solo evaluara si el archivo real ppto tiene inconsistencias con mayusulas o minusculas al finalizar deberás nuvamente lanzar el codigo..")  
-            validacion_calidad(realppto, config['armar_driver']) 
-            bol = False      
-        else:        
-            if valor == 1:              
-                logger.info("Por favor sigue las instrucciones..")          
-                ejecucion = vl.validaciongastos(rutaArchivoagrupa,rutaArchivomes,mes,cambioCeco_tipo_gasto,cambioCeco_tipo_centro)  
-                solucion = ejecucion.validacionCecos()   
-                nombre_archivo = f"validacion{Fecha}.xlsx"
-                solucion.to_excel("Salidas/"+nombre_archivo,index=False)
-                logger.info("Validación exportada adecuantamente revisa carpeta salidas.")
-                valor = input("Deseas continuar con alguna otra acción \n Digita 'SI  en caso contrario 'NO' \n ").upper()
-                if valor in tablavedad.keys():
-                    bol =tablavedad[valor]
-                else:
-                    bol = False           
-            elif valor==2:
-                logger.info("Comienza lectura archivo Real_Ppto para realizar ajustes de mayusculas y minusculas.")
-                ejecucion = aj.ajustdistriagrupacion(realppto,rutaArchivoagrupa,mes.capitalize(),cambioCeco_tipo_gasto,cambioCeco_tipo_centro,reemplazos,config['armar_driver']) 
-                        
-                logger.info("Se ha copiado historico de Real_ppto Carpeta historicos.")
-                logger.info("seguimos con los ajustes de la distribucion por agrupaciones.")
-                baseajusagrupacion = ejecucion.organizarbase(config['lista_columas_tipado'])
-                baseajusagrupacion.to_excel('Salidas/AjustesAgrupaciones.xlsx',index=False)
-                logger.info("Proceso de ajustes listo revisar carpeta salidas.")
-                valor = input("Deseas continuar con alguna otra acción \n Digita 'SI  en caso contrario 'NO' \n ").upper()
-                if valor in tablavedad.keys():
-                    bol =tablavedad[valor]
-                else:
-                    bol = False
-                
-            elif valor==3:
-                ajustes = os.path.isfile(os.path.join(os.getcwd(),'Salidas','AjustesAgrupaciones.xlsx'))
-                if ajustes:
-                    rutaagrupaciones = os.path.join(os.getcwd(),'Salidas','AjustesAgrupaciones.xlsx')
-                    concatenar = aj.anexobase(realppto,rutaagrupaciones,listameses,mes)
-                    archivofinal = concatenar.anexarinfo()
-                    archivofinal.to_excel('Insumos/Real_Ppto.xlsx',index=False)
-                    logger.info("Se actualizó base de Real_ppto como insumos.")
-                    archivofinal.to_excel('Salidas/Real_Ppto_{x}.xlsx'.format(x=mes),index=False)
-                    archivofinal.to_excel('Insumos/Real_Ppto.xlsx',index=False)
-                    logger.info("Archivo actualizado a mes {} se encuentra en carpeta salidas.".format(mes))
-                    bol = False
-                else:
-                    logger.info("lo siento aun no has ejecutado el paso  'Ajustes Base Agrupaciones' \n por favor ejecuta nuevamente el paso 2 para poder ejecutar este paso.")
-                    bol = False
-            elif valor==4:
-                driver =  generar_driver(ruta_realppto, config['armar_driver'], config['ajustes_driver'] )
-                driver.generar_driver()
-                logger.info("Se genero driver.")
-   
-    logger.info("Se termina el proceso.")
+    logger.info("A contunacion lee las opciones a ejecutar: ℹ️: ")
+    print("\n".join(f"{k}: {v}" for k, v in acciones.items()))        
+    seleccion = int(input(f"ingresa el número de la acción a realizar: ℹ️ \n"))    
+    seleccionar_tarea(seleccion)
 
 if __name__ == '__main__':
+    setup_logger()
     run()

@@ -1,47 +1,65 @@
 '''
 Modulo con funciones auxiliares.
 '''
-
 import numpy as np
 import pandas as pd
 import yaml
 from loguru import logger
 import time
+import os
+import ast
+from functools import reduce
+import operator
 
-
-def Registro_tiempo(original_func):
+def medir_tiempo(func):
+    
     def wrapper(*args, **kwargs):
-        start_time = time.time()
-        result = original_func(*args, **kwargs)
-        end_time = time.time()
-        execution_time = end_time - start_time
-        logger.info(
-            f"Tiempo de ejecución de {original_func.__name__}: {execution_time} segundos"
-        )
-        return result
-
+        inicio = time.time()
+        resultado = func(*args, **kwargs)
+        fin = time.time()
+        print(f"⏱ Tiempo lectura archivo '{func.__name__}': {fin - inicio:.3f} segundos")
+        return resultado
     return wrapper
 
 
-def Procesar_configuracion(nom_archivo_configuracion: str) -> dict:
-    """Lee un archivo YAML de configuración para un proyecto.
-
-    Args:
-        nom_archivo_configuracion (str): Nombre del archivo YAML que contiene
-            la configuración del proyecto.
-
-    Returns:
-        dict: Un diccionario con la información de configuración leída del archivo YAML.
+def cargar_archivo_yml(archivo_config):
+    """
+    funcion para cargar archivo de configuación usuario
+    arg: archivo_config: str
+    return: dict
     """
     try:
-        with open(nom_archivo_configuracion, "r", encoding="utf-8") as archivo:
-            configuracion_yaml = yaml.safe_load(archivo)
-        logger.success("Proceso de obtención de configuración satisfactorio")
+        with open(archivo_config, 'r',encoding='utf-8') as file:
+            configuracion = yaml.safe_load(file)
+        return configuracion
     except Exception as e:
-        logger.critical(f"Proceso de lectura de configuración fallido {e}")
+        logger.critical(f"Proceso de lectura de configuración fallido {e}  Revisa que el archivo exista")
         raise e
 
-    return configuracion_yaml
+
+@medir_tiempo
+def leer_excel(ruta,
+               titulos= None,
+               borrar_filas= None,
+               nombre_hoja='Sheet1',
+               col_usar=None,
+               tipo_datos=None):
+    """
+    Lee un archivo Excel SAP Analysis for Office.
+    Elimina la primera fila, y normaliza columnas.
+    return df (pl.DataFrame): DataFrame con los datos del Excel.
+    """
+    
+    df = pd.read_excel(
+        ruta,
+        sheet_name=nombre_hoja,
+        skiprows = borrar_filas,
+        names = titulos,
+        usecols= col_usar,
+        dtype= tipo_datos,
+        engine='openpyxl'
+    )
+    return df
 
 def reducir_uso_memoria(df: pd.DataFrame) -> pd.DataFrame:
     '''
@@ -84,25 +102,46 @@ def reducir_uso_memoria(df: pd.DataFrame) -> pd.DataFrame:
             df[col] = df[col].astype('category')
     return df
 
-def agrupar_dataframe(df: pd.DataFrame) -> pd.DataFrame:
-    """
-    Agrupa un DataFrame utilizando todas las columnas categóricas como claves 
-    y suma las columnas numéricas.
-    
-    Parámetros:
-        df (pd.DataFrame): El DataFrame a agrupar.
-    
-    Retorna:
-        pd.DataFrame: El DataFrame agrupado.
-    """
-    # Identificar columnas categóricas (tipo objeto)
-    columnas_categoricas = df.select_dtypes(include=['object', 'category']).columns.tolist()
-    
-    # Agrupar por columnas categóricas y sumar columnas numéricas
-    df_agrupado = df.groupby(columnas_categoricas, as_index=False).sum(numeric_only=True)
-    
+def agrupar_dataframe(   
+    df: pd.DataFrame,
+    vars_categoricas: list,
+    vars_numericas_ops: dict
+    ):
+    '''
+    Agrupa un DataFrame según las variables categóricas y aplica operaciones
+    '''
+    df_agrupado = (
+        df
+        .groupby(vars_categoricas, as_index=False, dropna=False)
+        .agg(vars_numericas_ops)
+    )
     return df_agrupado
 
+def realizar_merge(df_left, 
+                   df_right,
+                   left_on,
+                   right_on,
+                   como='left',
+                   sufijos="('_left','_right')"):
+    '''
+    documentacion for realizar_merge
+    
+        param df_left: data frame principal
+        param df_right: data frame secundario
+        param left_on: union data frame principal
+        param right_on: union data frame secundario
+        param how: tipo de union
+        return: data frame unido
+   
+    '''
+
+    data_unidad = pd.merge(df_left, 
+                           df_right, 
+                           left_on=left_on, 
+                           right_on=right_on, 
+                           how= como,
+                           suffixes=ast.literal_eval(sufijos))
+    return data_unidad
 
 def ajustes_clientes_num(df,col1, col2, valor:str="#"):
     '''
@@ -118,3 +157,113 @@ def ajustes_clientes_num(df,col1, col2, valor:str="#"):
                         if row[col1] == valor and row[col2] in valor_real
                         else row[col1], axis=1)
     return df
+
+def reemplazo_valores(df:pd.DataFrame, reemplazo, colcondicion, colreemplazo):
+    '''
+    Funcion que permite a partir de un diccionario cambiar los valores segun el usuario indique
+    ARG: df: data frame
+    reemplazo: diccionario clave: condición, valor: reemplazo
+    colcondicion = columna que quiere condicionar
+    colreemplazo = columna que quiere se le aplique el cambio
+    '''
+    for condincion, nuevovalor in reemplazo.items():
+        df_filtro = df[df[colcondicion]==condincion]
+        df.loc[df_filtro.index, colreemplazo] = nuevovalor
+    
+    return df
+
+
+def aplicar_condiciones(df, configuracion):
+    """
+    Funcion que a partir de un archivo de configuración realiza cambios
+    que el usuario ha parametrizado. 
+    """    
+    
+    for regla in configuracion:
+        try:
+            condiciones = [df[cond['columna']] == cond['valor'] 
+                           for cond in regla['columnas_condicion']]
+            condicion_total = condiciones[0]
+            for condicion in condiciones[1:]:
+                condicion_total &= condicion  # AND lógico entre las condiciones
+            # Aplicar el reemplazo solo donde se cumplan todas las condiciones
+            df.loc[condicion_total, regla['columna_reemplazo']] = regla['valor_reemplazo']
+        
+
+        except KeyError as e:
+            logger.warning(
+                f"La columna {e} no pudo ser filtrada porque no se encuentra en el DataFrame ⚠️"
+            )
+        
+    return df
+
+
+def insertar_valor_lista(lista, valor, posicion):
+    nueva_lista = lista.copy()
+    if posicion < 0:
+        posicion = 0
+    elif posicion > len(nueva_lista):
+        posicion = len(nueva_lista)
+    nueva_lista.insert(posicion, valor)
+    return nueva_lista
+
+def concatenar_df(df_completo, df_nuevo):
+    columnas_df_completo = set(df_completo.columns)
+    columnas_df_nuevo = set(df_nuevo.columns)
+    
+    if columnas_df_nuevo.difference(columnas_df_completo):
+        raise ValueError("Error: Con las columnas de Real ppto y agrupaciones, corrige e intenta de nuevo ❌")
+    else:
+        df_resultado = pd.concat([df_completo,df_nuevo],axis=0)
+        return df_resultado
+
+class formato_textos:
+    '''
+    Clase para formatear textos en columnas de DataFrame de manera estatica (no se necesita instaniar la clase)
+    como si fuese una libreria de formateo de textos.
+    '''
+
+    @staticmethod
+    def capitalize(column):
+        return column.astype(str).str.capitalize()
+
+    @staticmethod
+    def title(column):
+        return column.astype(str).str.title()
+
+    @staticmethod
+    def upper(column):
+        return column.astype(str).str.upper()
+    
+class filtrar_dataFrames:
+
+    operadores = {
+        "==": lambda s, v: s == v,
+        "!=": lambda s, v: s != v,
+        ">":  lambda s, v: s > v,
+        ">=": lambda s, v: s >= v,
+        "<":  lambda s, v: s < v,
+        "<=": lambda s, v: s <= v,
+        "in": lambda s, v: s.isin(v),
+        "not in": lambda s, v: ~s.isin(v),
+    }
+    operado_logico = { 
+        "and": operator.and_,
+        "or": operator.or_
+        }       
+
+    @staticmethod
+    def filtrar(df:pd.DataFrame, filtros:dict, logica="and"):
+        
+        masks = []
+        col = filtros.get("columna")
+        op = filtros.get("operador")
+        valor = filtros.get("valor")
+        if col not in df.columns:
+            raise KeyError(f"Columna '{col}' no existe")    
+        mask = filtrar_dataFrames.operadores[op](df[col], valor)
+        masks.append(mask)
+
+        final_mask = reduce(filtrar_dataFrames.operado_logico[logica], masks)
+        return df.loc[final_mask]
+    

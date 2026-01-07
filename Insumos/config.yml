@@ -1,0 +1,200 @@
+## archivo configuacion archivos gastos
+ruta_real_ppto: Insumos/Real_Ppto.xlsx
+ruta_config_reemplazos: Insumos/reemplazos.yml
+ruta_config_cecos: Insumos/configcecos.yml
+ruta_config_agrupaciones: Salidas/Agrupaciones.xlsx
+
+Año:
+# variables de años para el proceso
+    - Ppto 2026
+    - Real 2026
+
+parametros_lectura_archivos:
+# Parametros de lectura diferentes archivos
+  libro_real_ppto:
+    borrar_filas: 0
+    nombre_hoja: Hoja1
+  libro_agrupaciones:
+    borrar_filas: 0
+    nombre_hoja: Hoja1
+  libro_distribucion:
+    borrar_filas: 0
+    nombre_hoja: Hoja1
+
+seleccion_tarea:
+  1 : Evaluar archivo Real Ppto
+  2 : Validación Afos
+  3 : Ajustes Base Agrupaciones
+  4 : Generación Agrupaciones
+  5 : Generar drivers
+
+### ajustes de archivos agrupaciiones y distribucion
+col_archi_agrupa_mes:
+# AFO QUE VA EN EL INFORME
+  Clasificación Regionales: [str, mantener]
+  Detalle Clasif Regionales: [str, mantener]
+  Proceso: [str, mantener]
+  Nro Ceco: [str, mantener]
+  Nombre_centro_costo : [str, excluir]
+  Nro Cpto: [str, mantener]
+  Descripción Concepto: [str, excluir]
+  Nro Sub: [str, mantener]
+  Descripción Subconcepto: [str, excluir]
+  POOL: [str, mantener]
+  descripcion_POOL: [str, excluir]
+  Of Ventas: [str, mantener]
+  descri_oficina_ventas: [str, excluir]  
+  Agrupa Regional: [str, excluir]
+  Cód Canal: [str, mantener]
+  descripcion_ramo: [str, excluir]
+  Cód Linea-Marca : [str, mantener]
+  Cód Cliente : [str, mantener]
+  nombre_cliente: [str, excluir]
+  Subproceso: [str, mantener]
+  Agrupa_centro_de_costo: [str, excluir]
+  Codigo_agrupa_region: [str, excluir]
+  Cuenta Contable: [str, mantener]
+  descripcion_cuenta_contable:  [str, excluir]
+  mes:  [float, mantener] 
+ 
+filtros_archi_agrupaciones:  
+    - {columna: Proceso, operador : "!=", "valor": '99'}
+ 
+col_archivo_distrb_mes:
+  Nro Ceco : [str,mantener]
+  Nombre_centro_costo: [str,excluir]
+  Cod_clase_coste: [str,excluir]
+  Descripcion_clase_coste: [str,excluir]
+  Nro Cpto: [str,excluir]
+  Descripción Concepto: [str,excluir]
+  Nro Sub: [str,excluir]
+  Descripción Subconcepto: [str,excluir]
+  POOL: [str,excluir]
+  descripcion_POOL: [str,excluir]
+  Of Ventas: [str,excluir]
+  descri_oficina_ventas: [str,excluir]
+  Cód Canal: [str,excluir]
+  descripcion_ramo: [str,excluir]
+  Cód Cliente: [str,excluir]
+  mes: [float,mantener]
+  
+validacion_agrupaciones:
+    columnas_agrupaciones:
+      - Nro Ceco
+    coluumnas_distribucion:
+      - Nro Ceco
+
+uniones_merge:
+  left_on: Nro Ceco # se puede modificar
+  right_on: Nro Ceco # se puede modificar
+  como: 'outer' 
+  sufijos: ('_agrupaciones','_distribucion')
+
+columnas_ppto_real:
+  # capitalize: poner primera letra del texto mayuscula    
+   Clasificación Regionales: capitalize
+   Detalle Clasif Regionales: capitalize
+   Proceso: capitalize
+   Año: capitalize  
+   Nro Ceco: capitalize 
+   Descripción Centro De Costos: capitalize
+   Nro Cpto: upper
+   Descripción Concepto: capitalize
+   Nro Sub: upper
+   Descripción Subconcepto: capitalize
+   POOL: upper
+   POOL DE RECURSOS: capitalize
+   Of Ventas: upper
+   Descripción Of Ventas: title
+   Agrupa Regional: title
+   Cód Canal: upper
+   Canal: title
+   Cód Linea-Marca: title
+   Cód Cliente: capitalize
+   Subproceso: title
+   Agrupa Gerencia / Regional: capitalize
+   Actividad: capitalize
+   Agrupa Regional 2: title
+   Cuenta Contable: capitalize
+   Descrip Cuenta: capitalize
+   Responsable: title
+   Observaciones: capitalize
+   Clase: title
+      
+listameses : 
+  - Enero
+  - Febrero
+  - Marzo
+  - Abril
+  - Mayo
+  - Junio
+  - Julio
+  - Agosto
+  - Septiembre
+  - Octubre
+  - Noviembre
+  - Diciembre
+
+ajustes_driver:
+  driver_completo_columnas:
+    - Año
+    - Nro Ceco
+    - Descripción Centro De Costos
+    - Nro Cpto
+    - Descripción Concepto
+    - Nro Sub
+    - Descripción Subconcepto
+    - POOL
+    - POOL DE RECURSOS
+    - Of Ventas
+    - Actividad
+    - Descripción Of Ventas
+    - Cód Canal
+    - Canal
+    - Cód Linea-Marca
+    - Cód Cliente
+    - Agrupa Regional 2
+    - Responsable  
+  
+listado_columnas_agrupado:
+  Clasificación Regionales: mantener
+  Detalle Clasif Regionales: mantener
+  Proceso: mantener
+  Año : anexar
+  Nro Ceco: mantener
+  Descripción Centro De Costos: mantener
+  Nro Cpto: mantener
+  Descripción Concepto: mantener
+  Nro Sub: mantener
+  Descripción Subconcepto: mantener
+  POOL: mantener
+  POOL DE RECURSOS: mantener
+  Of Ventas: mantener
+  Descripción Of Ventas: mantener
+  Agrupa Regional: mantener
+  Cód Canal: mantener
+  Canal: mantener
+  Cód Linea-Marca: mantener
+  Cód Cliente: mantener
+  Subproceso: mantener
+  Agrupa Gerencia / Regional: mantener
+  Actividad: mantener
+  Agrupa Regional 2: mantener
+  Cuenta Contable: mantener
+  Descrip Cuenta: mantener
+  Responsable: anexar
+  Observaciones: anexar
+  Clase: anexar
+
+
+ 
+armar_driver: # armar columnas para agrupar drivers.
+   Nro Ceco : ['Nro Ceco','Descripción Centro De Costos','Actividad','Agrupa Gerencia / Regional']
+   Nro Cpto : ['Nro Cpto','Descripción Concepto']
+   Nro Sub : ['Nro Sub','Descripción Subconcepto']
+   POOL  : ['POOL','POOL DE RECURSOS']
+   Of Ventas : ['Of Ventas','Descripción Of Ventas','Agrupa Regional','Agrupa Regional 2']
+   Cód Canal:  ['Cód Canal','Canal']
+   Cuenta Contable : ['Cuenta Contable','Descrip Cuenta']
+
+

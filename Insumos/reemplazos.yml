@@ -1,11 +1,13 @@
 reemplazos:
+  ## reamplazos a partir de Numero de sub concepto
+  #-----------------------------------------------
   - columnas_condicion:  # cambio realizado por tal 
     - columna: "Nro Sub"
       valor: "751"
     columna_reemplazo: "Nro Cpto"
     valor_reemplazo: "16"
 
-  - columnas_condicion: 
+  - columnas_condicion:
     - columna: "Nro Sub"
       valor: "751"
     columna_reemplazo: "POOL"
@@ -23,6 +25,9 @@ reemplazos:
     columna_reemplazo: "POOL"
     valor_reemplazo: "030"
 
+  ## reamplazos a partir de Numero de concepto
+  #-----------------------------------------------
+
   - columnas_condicion: 
     - columna: "Nro Cpto"
       valor: "25"
@@ -35,33 +40,76 @@ reemplazos:
     columna_reemplazo: "POOL"
     valor_reemplazo: "130"
 
-  - columnas_condicion:
+  
+  ## reamplazos a partir de Numero de CECO
+  #-----------------------------------------------
+
+  - columnas_condicion: 
     - columna: "Nro Ceco"
-      valor: "43448400"
+      valor: "43046000"
     columna_reemplazo: "Clasificación Regionales"
     valor_reemplazo: "Sn"
 
   - columnas_condicion: 
     - columna: "Nro Ceco"
-      valor: "43448400"
+      valor: "43045800"
     columna_reemplazo: "Detalle Clasif Regionales"
     valor_reemplazo: "Sn"
 
   - columnas_condicion: 
-    - columna: "Nro Cpto"
-      valor: "44"
-    - columna: "Nro Sub"
-      valor: "502"
+    - columna: "Nro Ceco"
+      valor: "43046100"
     columna_reemplazo: "Detalle Clasif Regionales"
-    valor_reemplazo: "Arrendamientos sedes"
+    valor_reemplazo: "Sn"
 
   - columnas_condicion: 
-      - columna: "Nro Cpto"
-        valor: "41"
-      - columna: "Nro Sub"
-        valor: "503"
+    - columna: "Nro Ceco"
+      valor: "43036000"
     columna_reemplazo: "Detalle Clasif Regionales"
-    valor_reemplazo: "Niif"
+    valor_reemplazo: "Sn"
+
+  - columnas_condicion: 
+    - columna: "Nro Ceco"
+      valor: "43313600"
+    columna_reemplazo: "Detalle Clasif Regionales"
+    valor_reemplazo: "Sn"
+
+  - columnas_condicion: 
+    - columna: "Nro Ceco"
+      valor: "43055800"
+    columna_reemplazo: "Detalle Clasif Regionales"
+    valor_reemplazo: "Sn"
+
+  - columnas_condicion: 
+    - columna: "Nro Ceco"
+      valor: "43492900"
+    columna_reemplazo: "Detalle Clasif Regionales"
+    valor_reemplazo: "Sn"
+
+  - columnas_condicion: 
+    - columna: "Nro Ceco"
+      valor: "43419600"
+    columna_reemplazo: "Detalle Clasif Regionales"
+    valor_reemplazo: "Sn"
+
+  ## reamplazos a partir de Codigo Cliente
+  #-----------------------------------------------
+    
+  - columnas_condicion: 
+    - columna: "Cód Cliente"
+      valor: "10720800"
+    columna_reemplazo: "Of Ventas"
+    valor_reemplazo: "25"
+    
+## remplazos multiples condiciones
+  #-----------------------------------------------
+  - columnas_condicion: 
+      - columna: "Nro Ceco"
+        valor: "43417600"
+      - columna: "Nro Sub"
+        valor: "337"
+    columna_reemplazo: "Clasificación Regionales"
+    valor_reemplazo: "Transversales"
     
   - columnas_condicion: 
       - columna: "Nro Cpto"
@@ -70,66 +118,10 @@ reemplazos:
         valor: "506"
     columna_reemplazo: "Detalle Clasif Regionales"
     valor_reemplazo: "Niif"
-    
-  - columnas_condicion: 
-    - columna: "Cód Cliente"
-      valor: "10099647"
-    columna_reemplazo: "Of Ventas"
-    valor_reemplazo: "16"
-    
-  - columnas_condicion: 
-    - columna: "Cód Cliente"
-      valor: "10216228"
-    columna_reemplazo: "Of Ventas"
-    valor_reemplazo: "16"
-    
-  - columnas_condicion: 
-    - columna: "Cód Cliente"
-      valor: "10578252"
-    columna_reemplazo: "Of Ventas"
-    valor_reemplazo: "13"
-    
-  - columnas_condicion: 
-    - columna: "Cód Cliente"
-      valor: "10720991"
-    columna_reemplazo: "Of Ventas"
-    valor_reemplazo: "13"
-    
-  - columnas_condicion: 
-    - columna: "Cód Cliente"
-      valor: "10692451"
-    columna_reemplazo: "Of Ventas"
-    valor_reemplazo: "25"
-    
-  - columnas_condicion: 
-    - columna: "Cód Cliente"
-      valor: "10720800"
-    columna_reemplazo: "Of Ventas"
-    valor_reemplazo: "25"
-    
-  - columnas_condicion: 
-    - columna: "Cód Cliente"
-      valor: "10693491"
-    columna_reemplazo: "Of Ventas"
-    valor_reemplazo: "12"
-    
-  - columnas_condicion: 
-    - columna: "Cód Cliente"
-      valor: "10791277"
-    columna_reemplazo: "Of Ventas"
-    valor_reemplazo: "20"
-    
+
   - columnas_condicion: 
       - columna: "Nro Ceco"
-        valor: "43472200"
-      - columna: "Nro Sub"
-        valor: "337"
-    columna_reemplazo: "Clasificación Regionales"
-    valor_reemplazo: "Transversales"
-    
-  - columnas_condicion: 
-      - columna: "Nro Ceco"
-        valor: "43472200"
+        valor: "43417600"
       - columna: "Nro Sub"
         valor: "337"
     columna_reemplazo: "Detalle Clasif Regionales"
@@ -137,13 +129,7 @@ reemplazos:
     
   - columnas_condicion: 
     - columna: "Nro Ceco"
-      valor: "751"
-    columna_reemplazo: "Nro Cpto"
-    valor_reemplazo: "16"
-
-  - columnas_condicion: 
-    - columna: "Nro Ceco"
-      valor: "43410400"
+      valor: "43417000"
     - columna: "Nro Cpto"
       valor: "16"
     - columna: "Nro Sub"
@@ -153,7 +139,7 @@ reemplazos:
 
   - columnas_condicion: 
     - columna: "Nro Ceco"
-      valor: "43410400"
+      valor: "43417000"
     - columna: "Nro Cpto"
       valor: "16"
     - columna: "Nro Sub"
@@ -163,7 +149,7 @@ reemplazos:
 
   - columnas_condicion: 
     - columna: "Nro Ceco"
-      valor: "43300000"
+      valor: "43311100"
     - columna: "Nro Cpto"
       valor: "46"
     - columna: "Nro Sub"
@@ -173,7 +159,7 @@ reemplazos:
 
   - columnas_condicion: 
     - columna: "Nro Ceco"
-      valor: "43300000"
+      valor: "43311100"
     - columna: "Nro Cpto"
       valor: "46"
     - columna: "Nro Sub"
@@ -183,7 +169,7 @@ reemplazos:
   
   - columnas_condicion: 
     - columna: "Nro Ceco"
-      valor: "43442400"
+      valor: "43418700"
     - columna: "Nro Cpto"
       valor: "16"
     - columna: "Nro Sub"
@@ -193,7 +179,7 @@ reemplazos:
   
   - columnas_condicion: 
     - columna: "Nro Ceco"
-      valor: "43442400"
+      valor: "43418700"
     - columna: "Nro Cpto"
       valor: "16"
     - columna: "Nro Sub"
@@ -203,7 +189,7 @@ reemplazos:
 
   - columnas_condicion: 
     - columna: "Nro Ceco"
-      valor: "43410000"
+      valor: "43417300"
     - columna: "Nro Cpto"
       valor: "16"
     - columna: "Nro Sub"
@@ -213,7 +199,7 @@ reemplazos:
 
   - columnas_condicion: 
     - columna: "Nro Ceco"
-      valor: "43410000"
+      valor: "43417300"
     - columna: "Nro Cpto"
       valor: "16"
     - columna: "Nro Sub"
@@ -223,7 +209,7 @@ reemplazos:
   
   - columnas_condicion: 
     - columna: "Nro Ceco"
-      valor: "43400200"
+      valor: "43419100"
     - columna: "Nro Cpto"
       valor: "16"
     - columna: "Nro Sub"
@@ -233,17 +219,17 @@ reemplazos:
 
   - columnas_condicion: 
     - columna: "Nro Ceco"
-      valor: "43400200"
+      valor: "43419100"
     - columna: "Nro Cpto"
       valor: "16"
     - columna: "Nro Sub"
       valor: "958"
     columna_reemplazo: "Clasificación Regionales"
     valor_reemplazo: "Controlable"
-
-  - columnas_condicion:
+  
+  - columnas_condicion: 
     - columna: "Nro Ceco"
-      valor: "43472500"
+      valor: "43492200"
     - columna: "Nro Cpto"
       valor: "16"
     - columna: "Nro Sub"
@@ -253,7 +239,7 @@ reemplazos:
 
   - columnas_condicion: 
     - columna: "Nro Ceco"
-      valor: "43472500"
+      valor: "43492200"
     - columna: "Nro Cpto"
       valor: "16"
     - columna: "Nro Sub"
@@ -263,7 +249,7 @@ reemplazos:
 
   - columnas_condicion: 
     - columna: "Nro Ceco"
-      valor: "43300600"
+      valor: "43312100"
     - columna: "Nro Cpto"
       valor: "25"
     - columna: "Nro Sub"
@@ -273,7 +259,7 @@ reemplazos:
 
   - columnas_condicion: 
     - columna: "Nro Ceco"
-      valor: "43300600"
+      valor: "43312100"
     - columna: "Nro Cpto"
       valor: "25"
     - columna: "Nro Sub"
@@ -323,7 +309,7 @@ reemplazos:
 
   - columnas_condicion: 
     - columna: "Nro Ceco"
-      valor: "43302200"
+      valor: "43312700"
     - columna: "Nro Cpto"
       valor: "18"
     - columna: "Nro Sub"
@@ -400,3 +386,9 @@ reemplazos:
       valor: "772"
     columna_reemplazo: "Detalle Clasif Regionales"
     valor_reemplazo: "Controlable"
+    
+  - columnas_condicion: 
+    - columna: "Cód Cliente"
+      valor: "11006074"
+    columna_reemplazo: "Of Ventas"
+    valor_reemplazo: "14"
