@@ -1,53 +1,10 @@
-Configurar_cecos_tipo_gastos:
-  '43107700' : Mandato
-  '43107400' : Mandato
-  '43043300' : Mandato
-  '43043400' : Mandato
-  '43465400' : Mandato
-  '43465700' : Mandato
-  '43107500' : Mandato
-  '43465300' : Mandato
-  '43465600' : Mandato
-  '43465500' : Mandato
-  '43416000' : Mandato
-  '43043500' : Mandato
-  '43204900' : Mandato
-  '43416100' : Mandato
-  '43107600' : Mandato
-  '43416200' : Mandato
-  '34302200' : Ventas
-  '43044900' : Admon
-  '43045100' : Ventas
-  '43309900' : Ventas
-  '43108600' : Mandato
-  '43100100' : Mandato
-  '43010000' : Admon
-  '43480000' : Ventas
-  '43414400' : Admon
+Configurar_cecos_Proceso:
+  '43021500' : Dirección red comercial
   
-Configurar_cecos_tipo_centro:
-  '43107700' : Gastos en traslado Neg
-  '43107400' : Gastos en traslado Neg
-  '43043300' : Gastos en traslado Neg
-  '43043400' : Gastos en traslado Neg
-  '43465400' : Gastos en traslado Neg
-  '43465700' : Gastos en traslado Neg
-  '43107500' : Gastos en traslado Neg
-  '43465300' : Gastos en traslado Neg
-  '43465600' : Gastos en traslado Neg
-  '43465500' : Gastos en traslado Neg
-  '43416000' : Gastos en traslado Neg
-  '43043500' : Gastos en traslado Neg
-  '43204900' : Gastos en traslado Neg
-  '43416100' : Gastos en traslado Neg
-  '43107600' : Gastos en traslado Neg
-  '43416200' : Gastos en traslado Neg
-  '34302200' : Logistica
-  '43044900' : Overhead
-  '43045100' : Overhead
-  '43309900' : Logistica
-  '43108600' : Gastos en traslado Neg
-  '43100100' : Gastos en traslado Neg
-  '43010000' : Overhead
-  '43480000' : Ventas
-  '43414400' : Overhead
+Configurar_cecos_Cod_Proceso:
+  '43021500' : '5'
+
+Configurar_cecos_Subproceso:
+  '43021500' : Soporte Sn
+
+

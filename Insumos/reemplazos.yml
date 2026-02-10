@@ -1,13 +1,11 @@
 reemplazos:
-  ## reamplazos a partir de Numero de sub concepto
-  #-----------------------------------------------
   - columnas_condicion:  # cambio realizado por tal 
     - columna: "Nro Sub"
       valor: "751"
     columna_reemplazo: "Nro Cpto"
     valor_reemplazo: "16"
 
-  - columnas_condicion:
+  - columnas_condicion: 
     - columna: "Nro Sub"
       valor: "751"
     columna_reemplazo: "POOL"
@@ -25,9 +23,6 @@ reemplazos:
     columna_reemplazo: "POOL"
     valor_reemplazo: "030"
 
-  ## reamplazos a partir de Numero de concepto
-  #-----------------------------------------------
-
   - columnas_condicion: 
     - columna: "Nro Cpto"
       valor: "25"
@@ -40,76 +35,21 @@ reemplazos:
     columna_reemplazo: "POOL"
     valor_reemplazo: "130"
 
-  
-  ## reamplazos a partir de Numero de CECO
-  #-----------------------------------------------
-
   - columnas_condicion: 
-    - columna: "Nro Ceco"
-      valor: "43046000"
-    columna_reemplazo: "Clasificación Regionales"
-    valor_reemplazo: "Sn"
-
-  - columnas_condicion: 
-    - columna: "Nro Ceco"
-      valor: "43045800"
+    - columna: "Nro Cpto"
+      valor: "44"
+    - columna: "Nro Sub"
+      valor: "502"
     columna_reemplazo: "Detalle Clasif Regionales"
-    valor_reemplazo: "Sn"
+    valor_reemplazo: "Arrendamientos sedes"
 
   - columnas_condicion: 
-    - columna: "Nro Ceco"
-      valor: "43046100"
-    columna_reemplazo: "Detalle Clasif Regionales"
-    valor_reemplazo: "Sn"
-
-  - columnas_condicion: 
-    - columna: "Nro Ceco"
-      valor: "43036000"
-    columna_reemplazo: "Detalle Clasif Regionales"
-    valor_reemplazo: "Sn"
-
-  - columnas_condicion: 
-    - columna: "Nro Ceco"
-      valor: "43313600"
-    columna_reemplazo: "Detalle Clasif Regionales"
-    valor_reemplazo: "Sn"
-
-  - columnas_condicion: 
-    - columna: "Nro Ceco"
-      valor: "43055800"
-    columna_reemplazo: "Detalle Clasif Regionales"
-    valor_reemplazo: "Sn"
-
-  - columnas_condicion: 
-    - columna: "Nro Ceco"
-      valor: "43492900"
-    columna_reemplazo: "Detalle Clasif Regionales"
-    valor_reemplazo: "Sn"
-
-  - columnas_condicion: 
-    - columna: "Nro Ceco"
-      valor: "43419600"
-    columna_reemplazo: "Detalle Clasif Regionales"
-    valor_reemplazo: "Sn"
-
-  ## reamplazos a partir de Codigo Cliente
-  #-----------------------------------------------
-    
-  - columnas_condicion: 
-    - columna: "Cód Cliente"
-      valor: "10720800"
-    columna_reemplazo: "Of Ventas"
-    valor_reemplazo: "25"
-    
-## remplazos multiples condiciones
-  #-----------------------------------------------
-  - columnas_condicion: 
-      - columna: "Nro Ceco"
-        valor: "43417600"
+      - columna: "Nro Cpto"
+        valor: "41"
       - columna: "Nro Sub"
-        valor: "337"
-    columna_reemplazo: "Clasificación Regionales"
-    valor_reemplazo: "Transversales"
+        valor: "503"
+    columna_reemplazo: "Detalle Clasif Regionales"
+    valor_reemplazo: "Niif"
     
   - columnas_condicion: 
       - columna: "Nro Cpto"
@@ -118,16 +58,62 @@ reemplazos:
         valor: "506"
     columna_reemplazo: "Detalle Clasif Regionales"
     valor_reemplazo: "Niif"
-
-  - columnas_condicion: 
-      - columna: "Nro Ceco"
-        valor: "43417600"
-      - columna: "Nro Sub"
-        valor: "337"
-    columna_reemplazo: "Detalle Clasif Regionales"
-    valor_reemplazo: "Impuestos"
     
   - columnas_condicion: 
+    - columna: "Cód Cliente"
+      valor: "10099647"
+    columna_reemplazo: "Of Ventas"
+    valor_reemplazo: "16"
+    
+  - columnas_condicion: 
+    - columna: "Cód Cliente"
+      valor: "10216228"
+    columna_reemplazo: "Of Ventas"
+    valor_reemplazo: "16"
+    
+  - columnas_condicion: 
+    - columna: "Cód Cliente"
+      valor: "10578252"
+    columna_reemplazo: "Of Ventas"
+    valor_reemplazo: "13"
+    
+  - columnas_condicion: 
+    - columna: "Cód Cliente"
+      valor: "10720991"
+    columna_reemplazo: "Of Ventas"
+    valor_reemplazo: "13"
+    
+  - columnas_condicion: 
+    - columna: "Cód Cliente"
+      valor: "10692451"
+    columna_reemplazo: "Of Ventas"
+    valor_reemplazo: "25"
+    
+  - columnas_condicion: 
+    - columna: "Cód Cliente"
+      valor: "10720800"
+    columna_reemplazo: "Of Ventas"
+    valor_reemplazo: "25"
+    
+  - columnas_condicion: 
+    - columna: "Cód Cliente"
+      valor: "10693491"
+    columna_reemplazo: "Of Ventas"
+    valor_reemplazo: "12"
+    
+  - columnas_condicion: 
+    - columna: "Cód Cliente"
+      valor: "10791277"
+    columna_reemplazo: "Of Ventas"
+    valor_reemplazo: "20"
+
+  - columnas_condicion: 
+    - columna: "Nro Ceco"
+      valor: "751"
+    columna_reemplazo: "Nro Cpto"
+    valor_reemplazo: "16"
+
+  - columnas_condicion: 
     - columna: "Nro Ceco"
       valor: "43417000"
     - columna: "Nro Cpto"
@@ -227,6 +213,7 @@ reemplazos:
     columna_reemplazo: "Clasificación Regionales"
     valor_reemplazo: "Controlable"
   
+
   - columnas_condicion: 
     - columna: "Nro Ceco"
       valor: "43492200"
@@ -391,4 +378,100 @@ reemplazos:
     - columna: "Cód Cliente"
       valor: "11006074"
     columna_reemplazo: "Of Ventas"
-    valor_reemplazo: "14"
+    valor_reemplazo: "R51"
+    
+  - columnas_condicion: 
+    - columna: "Nro Ceco"
+      valor: "43007300"
+    columna_reemplazo: "Proceso"
+    valor_reemplazo: "Dirección red comerc"
+    
+  - columnas_condicion: 
+    - columna: "Nro Ceco"
+      valor: "43016300"
+    columna_reemplazo: "Proceso"
+    valor_reemplazo: "Dirección red comerc"
+    
+  - columnas_condicion: 
+    - columna: "Nro Ceco"
+      valor: "43302000"
+    columna_reemplazo: "Subproceso"
+    valor_reemplazo: "Transporte"
+    
+  - columnas_condicion: 
+    - columna: "Nro Ceco"
+      valor: "43300000"
+    columna_reemplazo: "Subproceso"
+    valor_reemplazo: "Almacenamiento"
+    
+  - columnas_condicion: 
+    - columna: "Nro Ceco"
+      valor: "43302100"
+    columna_reemplazo: "Subproceso"
+    valor_reemplazo: "Dirección"
+    
+  - columnas_condicion: 
+    - columna: "Nro Ceco"
+      valor: "43302200"
+    columna_reemplazo: "Subproceso"
+    valor_reemplazo: "Bajas de inventario"
+    
+  - columnas_condicion: 
+    - columna: "Nro Ceco"
+      valor: "43300400"
+    columna_reemplazo: "Subproceso"
+    valor_reemplazo: "Transporte"
+    
+  - columnas_condicion: 
+    - columna: "Nro Ceco"
+      valor: "43301100"
+    columna_reemplazo: "Subproceso"
+    valor_reemplazo: "Almacenamiento"
+    
+  - columnas_condicion: 
+    - columna: "Nro Ceco"
+      valor: "43300300"
+    columna_reemplazo: "Subproceso"
+    valor_reemplazo: "Transporte"
+    
+  - columnas_condicion: 
+    - columna: "Nro Ceco"
+      valor: "43410400"
+    columna_reemplazo: "Subproceso"
+    valor_reemplazo: "Trade de Redes"
+    
+  - columnas_condicion: 
+    - columna: "Nro Ceco"
+      valor: "43410400"
+    columna_reemplazo: "Subproceso"
+    valor_reemplazo: "Trade de Redes"
+    
+  - columnas_condicion: 
+    - columna: "Nro Ceco"
+      valor: "43410300"
+    columna_reemplazo: "Subproceso"
+    valor_reemplazo: "Desarrollo Clientes"
+    
+  - columnas_condicion: 
+    - columna: "Nro Ceco"
+      valor: "43401100"
+    columna_reemplazo: "Subproceso"
+    valor_reemplazo: "Fuerza de ventas"
+    
+  - columnas_condicion: 
+    - columna: "Nro Ceco"
+      valor: "43400100"
+    columna_reemplazo: "Subproceso"
+    valor_reemplazo: "Fuerza de ventas"
+    
+  - columnas_condicion: 
+    - columna: "Nro Ceco"
+      valor: "43400000"
+    columna_reemplazo: "Subproceso"
+    valor_reemplazo: "Fuerza de ventas"
+    
+  - columnas_condicion: 
+    - columna: "Nro Ceco"
+      valor: "43420200"
+    columna_reemplazo: "Subproceso"
+    valor_reemplazo: "Negociaciones"

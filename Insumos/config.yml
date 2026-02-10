@@ -13,7 +13,7 @@ parametros_lectura_archivos:
 # Parametros de lectura diferentes archivos
   libro_real_ppto:
     borrar_filas: 0
-    nombre_hoja: Hoja1
+    nombre_hoja: Sheet1
   libro_agrupaciones:
     borrar_filas: 0
     nombre_hoja: Hoja1
@@ -21,18 +21,23 @@ parametros_lectura_archivos:
     borrar_filas: 0
     nombre_hoja: Hoja1
 
+filtros_archi_agrupaciones:  
+    - {columna: Cod_Proceso, operador : "!=", "valor": '99'}
+
 seleccion_tarea:
   1 : Evaluar archivo Real Ppto
   2 : Validación Afos
   3 : Ajustes Base Agrupaciones
-  4 : Generación Agrupaciones
+  4 : Generar Real Ppto
   5 : Generar drivers
+  6 : Correcciones
 
 ### ajustes de archivos agrupaciiones y distribucion
 col_archi_agrupa_mes:
 # AFO QUE VA EN EL INFORME
   Clasificación Regionales: [str, mantener]
   Detalle Clasif Regionales: [str, mantener]
+  Cod_Proceso: [str, mantener]
   Proceso: [str, mantener]
   Nro Ceco: [str, mantener]
   Nombre_centro_costo : [str, excluir]
@@ -50,6 +55,7 @@ col_archi_agrupa_mes:
   Cód Linea-Marca : [str, mantener]
   Cód Cliente : [str, mantener]
   nombre_cliente: [str, excluir]
+  Cod_sub_proceso: [str, excluir]
   Subproceso: [str, mantener]
   Agrupa_centro_de_costo: [str, excluir]
   Codigo_agrupa_region: [str, excluir]
@@ -57,8 +63,6 @@ col_archi_agrupa_mes:
   descripcion_cuenta_contable:  [str, excluir]
   mes:  [float, mantener] 
  
-filtros_archi_agrupaciones:  
-    - {columna: Proceso, operador : "!=", "valor": '99'}
  
 col_archivo_distrb_mes:
   Nro Ceco : [str,mantener]
@@ -121,6 +125,10 @@ columnas_ppto_real:
    Observaciones: capitalize
    Clase: title
       
+col_adicion_real_ppto:
+  - Acumulado
+  - Total
+
 listameses : 
   - Enero
   - Febrero
@@ -187,7 +195,6 @@ listado_columnas_agrupado:
   Clase: anexar
 
 
- 
 armar_driver: # armar columnas para agrupar drivers.
    Nro Ceco : ['Nro Ceco','Descripción Centro De Costos','Actividad','Agrupa Gerencia / Regional']
    Nro Cpto : ['Nro Cpto','Descripción Concepto']

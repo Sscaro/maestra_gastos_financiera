@@ -1,23 +1,34 @@
+import pandas as pd
 from loguru import logger
 from .assert_ppto import validacion_calidad
 from helpers import agrupar_dataframe, realizar_merge, cargar_archivo_yml
 from helpers import realizar_merge, aplicar_condiciones,concatenar_df
 from helpers import filtrar_dataFrames, formato_textos
 from .ajustes_archivos import ajustes_archivos_gasto
-from pandas import to_datetime 
+
 
 def funcion_inconsistecias(objeto_agrupaciones,config,path_real_ppto ):
-    logger.info("Este paso solo evaluara si el archivo real ppto tiene inconsistencias con mayusulas o minusculas al finalizar deberás nuvamente lanzar el código..")
+    logger.info("Este paso solo evaluará si el archivo real ppto tiene inconsistencias con mayúsculas o minúsculas al finalizar deberás nuevamente lanzar el código..")
     data_real_ppto = objeto_agrupaciones.lectura_archivos({'ruta':path_real_ppto} | config['parametros_lectura_archivos']['libro_real_ppto'])
     bol=  validacion_calidad(data_real_ppto, config['armar_driver'])
     return bol
 
-def funcion_validacion_agrupa_distribucion(objeto_agrupaciones,config, rutaArchivoagrupa, rutaArchivodisitribucion ,dict_arch_param_agrupaciones, mes ):
+def funcion_validacion_agrupa_distribucion(objeto_agrupaciones,config, rutaArchivoagrupa,
+                                            rutaArchivodisitribucion ,dict_arch_param_agrupaciones, 
+                                            path_config_cecos,
+                                            mes ):
+    
     logger.info("Este paso evalua si hay concordancia entre ambos archivos AFO..")
 
     data_agrupaciones = objeto_agrupaciones.lectura_archivos_gastos(ruta_agrupaciones=rutaArchivoagrupa, 
                                                                     dict_param=dict_arch_param_agrupaciones,
                                                                     tipo_gasto=  config['col_archi_agrupa_mes'])
+    
+    config_cecos = cargar_archivo_yml(path_config_cecos)
+    data_agrupaciones["Proceso"] = data_agrupaciones["Nro Ceco"].map(config_cecos['Configurar_cecos_Proceso']).fillna(data_agrupaciones["Proceso"])
+    data_agrupaciones["Cod_Proceso"] = data_agrupaciones["Nro Ceco"].map(config_cecos['Configurar_cecos_Cod_Proceso']).fillna(data_agrupaciones["Cod_Proceso"])
+    data_agrupaciones["Subproceso"] = data_agrupaciones["Nro Ceco"].map(config_cecos['Configurar_cecos_Subproceso']).fillna(data_agrupaciones["Subproceso"])
+
     #filtro Archivo agrupaciones segun configuracion
     for filtro in config['filtros_archi_agrupaciones']:
         data_agrupaciones = filtrar_dataFrames.filtrar(data_agrupaciones, filtro)
@@ -40,7 +51,7 @@ def funcion_validacion_agrupa_distribucion(objeto_agrupaciones,config, rutaArchi
     return data_para_validar
 
 def ajuste_agrupaciones(objeto_agrupaciones, config,path_real_ppto,rutaArchivoagrupa,dict_arch_param_agrupaciones,
-                        path_config_reemplazos , mes):
+                        path_config_reemplazos, path_config_cecos , mes):
     '''
     Docstring for ajuste_agrupaciones    
     Funcion para realizar ajustes en el archivo de Agrupaciones
@@ -59,14 +70,23 @@ def ajuste_agrupaciones(objeto_agrupaciones, config,path_real_ppto,rutaArchivoag
     data_agrupaciones = objeto_agrupaciones.lectura_archivos_gastos(ruta_agrupaciones=rutaArchivoagrupa,
                                                                 dict_param=dict_arch_param_agrupaciones,
                                                                 tipo_gasto=  config['col_archi_agrupa_mes'])
-    
+    config_cecos = cargar_archivo_yml(path_config_cecos)
+
+    data_agrupaciones["Proceso"] = data_agrupaciones["Nro Ceco"].map(config_cecos['Configurar_cecos_Proceso']).fillna(data_agrupaciones["Proceso"])
+    data_agrupaciones["Cod_Proceso"] = data_agrupaciones["Nro Ceco"].map(config_cecos['Configurar_cecos_Cod_Proceso']).fillna(data_agrupaciones["Cod_Proceso"])
+    data_agrupaciones["Subproceso"] = data_agrupaciones["Nro Ceco"].map(config_cecos['Configurar_cecos_Subproceso']).fillna(data_agrupaciones["Subproceso"])
+
+
     # realizando filtros según configuración
     for filtro in config['filtros_archi_agrupaciones']:
         data_agrupaciones = filtrar_dataFrames.filtrar(data_agrupaciones, filtro)
     # reemplazos segun archivo configuración
     config_reemlazos = cargar_archivo_yml(path_config_reemplazos)
+    
+
+
     data_agrupaciones = aplicar_condiciones(data_agrupaciones,config_reemlazos['reemplazos'])
-    # realizar driver a partir de archivo real ppto   
+    # realizar driver a partir de archivo real ppto    
     for columnas, agrupaciones in config['armar_driver'].items():
         driver_ppto = ajustes_archivos_gasto.driver_real_ppto(data_real_ppto,
                                                              columnas,
@@ -100,10 +120,14 @@ def funcion_anexar_real_ppto(objeto_agrupaciones,config, path_real_agrupaciones,
         data_agrupaciones[nuevos_meses] = 0
     data_real_ppto = objeto_agrupaciones.lectura_archivos({'ruta':path_real_ppto} | config['parametros_lectura_archivos']['libro_real_ppto'] |
                                                       {'tipo_datos': str})
-    data_real_ppto[mes] = to_datetime(data_real_ppto[mes], errors="coerce").astype("float64")
     
-    for mes_lista in config['listameses']:
-        data_real_ppto[mes_lista] = to_datetime(data_real_ppto[mes_lista], errors="coerce").astype("float64")
+    data_agrupaciones[mes] = pd.to_numeric(data_agrupaciones[mes], errors="coerce").astype("float64")
+    data_real_ppto[mes] = pd.to_numeric(data_real_ppto[mes], errors="coerce").astype("float64")
+    
+
+    lista_variables_numericas = config['listameses'] + config['col_adicion_real_ppto']
+    for mes_lista in lista_variables_numericas:
+        data_real_ppto[mes_lista] = pd.to_numeric(data_real_ppto[mes_lista], errors="coerce").astype("float64")
     
     # Crea una copia del Real ppto del mes anterior antes de modificar
     logger.info("Se ha creado copia del archivo Real Ppto del mes anaterior en la carpeta salidas ℹ️")

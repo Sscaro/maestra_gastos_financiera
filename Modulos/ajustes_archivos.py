@@ -59,7 +59,7 @@ class generar_driver:
         '''
 
         dict_data_frames = {}
-        for col, values in self.config.items(): # ciclo que permite aramar drivers: col: columna a con valor clave, values, columnas resultantes
+        for col, values in self.config['armar_driver'].items(): # ciclo que permite aramar drivers: col: columna a con valor clave, values, columnas resultantes
             values.append('Responsable')
             parametro = self.df_ppto[values]
             parametro = parametro.drop_duplicates(keep='first')

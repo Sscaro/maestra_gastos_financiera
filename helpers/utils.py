@@ -267,3 +267,19 @@ class filtrar_dataFrames:
         final_mask = reduce(filtrar_dataFrames.operado_logico[logica], masks)
         return df.loc[final_mask]
     
+
+def correcciones(ruta_archivo, dicccionario):
+    '''
+    funcion para corregir las mayusculas y minusculas
+    '''
+
+    df = pd.read_excel(ruta_archivo)
+    for columna, transformacion in dicccionario.items():
+        if columna in df.columns:
+            df[columna] = (
+                df[columna]
+                .astype(str)
+                .str.strip()
+                .str.__getattribute__(transformacion)()
+            )    
+    df.to_excel("Salidas\salida_transformada.xlsx", index=False)

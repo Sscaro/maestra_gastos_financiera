@@ -2,7 +2,6 @@
 Modulo para realizar validaciones iniciales de la plantilla real ppto.
 '''
 from loguru import logger
-import sys
 
 def validacion_calidad(data, diction):
     '''
@@ -31,8 +30,7 @@ def validar_unicidad_codigo_nombre(df, codigo_col, nombre_col):
         .drop_duplicates()
         .groupby(codigo_col)[nombre_col]
         .nunique()
-    )
-    bol = True
+    )   
     inconsistencias = inconsistencias[inconsistencias > 1]
     if not inconsistencias.empty:
         logger.info(f"Inconsistencias encontradas para {codigo_col} y {nombre_col}:")
@@ -41,6 +39,5 @@ def validar_unicidad_codigo_nombre(df, codigo_col, nombre_col):
             logger.info(f"  {codigo_col}: {cod} → {nombre_col} encontrados: {list(nombres)}")
         logger.info(f"Por favor, corrige estas inconsistencias antes de continuar.")
         bol =  False
-   
-    return bol
+        return bol
 
